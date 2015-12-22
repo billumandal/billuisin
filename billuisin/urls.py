@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-urlpatterns = patterns('',
+urlpatterns = patterns('billuisin.views',
     # Examples:
-    url(r'^$', 'billuisin.views.home', name='home'),
+    url(r'^$', 'home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'^$', HomeView.as_view(), name='home')
+    url(r'^quiz/', include('quiz.urls')),
 )
