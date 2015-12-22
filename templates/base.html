@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+	{% spaceless %}
+	<title>{% block title %}Billu's first website{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<style type='text/css'>{% block css %}{% endblock %}</style>
+</head>
+<body>{% block body %}
+	{% block content %}{% endblock %}
+	{% block footer %}
+		<hr>
+		<p>Thanks for visiting my site.</p>
+	{% endblock %}
+{% endblock %}{% endspaceless %}
+</body>
+</html>
