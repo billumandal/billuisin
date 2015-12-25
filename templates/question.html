@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Home of {{block.super}}{% endblock %}
+{% block content %}
+	<form action='/your-name/' method='post'>
+		{% csrf_token %}
+		{{ form }}
+	</form>
+{% endblock %}
