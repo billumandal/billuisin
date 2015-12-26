@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User 
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.contrib.auth.models import User 
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -18,30 +18,35 @@ class Subject(models.Model):
 
 class QuestionAnswer(models.Model):
 	subject = models.ManyToManyField(Subject)
-	question_text = models.CharField(max_length=150)
-	option_w = models.CharField(max_length=75, null=True)
-	option_x = models.CharField(max_length=75, null=True)
+	question_text = models.TextField(max_length=150)
+	option_w = models.CharField(max_length=75, blank=True, null=True)
+	option_x = models.CharField(max_length=75, blank=True, null=True)
 	option_y = models.CharField(max_length=75, blank=True)
 	option_z = models.CharField(max_length=75, blank=True)
-	correct_answer = models.CharField(max_length=75, blank=False)
+	on = models.BooleanField(default=True)
 
 	def __unicode__(self):
 		return self.id
 
 	class Meta:
+		# app_label = 'QuestionAnswer'
 		verbose_name='Question'
 		verbose_name_plural = 'Questions'
 
-# class Answer(models.Model):
-# 	question = models.OneToOneField(Question)
-# 	correct_answer = models.CharField(max_length=75, blank=False)
+class Answers(models.Model):
+	id = models.OneToOneField(QuestionAnswer, primary_key=True)
+	correct_answer = models.CharField(max_length=75, blank=False, default=None)
+
+	def __unicode__(self):
+		return self.id
+		return self.correct_answer
 
 class QuizAttempt(models.Model):
 	username = models.ManyToManyField(User)
 	subject = models.ManyToManyField(Subject)
 	slug = models.SlugField(unique=False)
 	datetime = models.DateTimeField(auto_now_add=True)
-	questions_included = models.ManyToManyField(QuestionAnswer)
+	questions_included = models.ForeignKey('quiz.QuestionAnswer', null=True)
 	correctly_answered_questions = models.IntegerField()
 	total_marks = models.IntegerField()
 
@@ -49,10 +54,13 @@ class QuizAttempt(models.Model):
 		verbose_name='Quiz'
 		verbose_name_plural = 'Quizzes'
 
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.username +' ' +  self.subject + ' ' + self.datetime.month +' ' +  self.datetime.year)
+		super(QuizAttempt, self).save(*args, **kwargs)
+
 	@property
 	def correct_answer_count(self):
-	    return self._correct_answer_count
-	
+	    return self._correct_answer_count	
 
 	def __unicode__(self):
 		return "Quiz ID is {}".format(self.id)

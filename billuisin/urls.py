@@ -8,5 +8,5 @@ urlpatterns = patterns('billuisin.views',
 
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^quiz/', include('quiz.urls')),
-    url(r'^register/$', 'register', name='register'),
+    # url(r'^register/$', 'register', name='register'),
 )

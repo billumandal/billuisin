@@ -5,7 +5,7 @@ from models import QuizAttempt
 
 class QuizAttempt(forms.Form):
 	subject = forms.ManyToManyField(Subject)
-	question_text = forms.CharField(max_length=150)
+	question_text = forms.TextField(max_length=150)
 	option_w = forms.CharField(max_length=75, null=True)
 	option_x = forms.CharField(max_length=75, null=True)
 	option_y = forms.CharField(max_length=75, blank=True)

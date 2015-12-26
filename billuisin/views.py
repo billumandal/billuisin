@@ -5,5 +5,4 @@ from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib.auth.decorators import login_required
 
 def home(request):
-	# template_name = 'index.html'
 	return render(request, 'index.html')

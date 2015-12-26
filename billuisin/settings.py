@@ -13,8 +13,31 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates/')
-
 TEMPLATE_DIRS = (TEMPLATE_PATH,)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            TEMPLATE_PATH
+            # (os.path.join(\'templates'),)
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -25,7 +48,7 @@ SECRET_KEY = 'tv6lcio@hp8+1@aq2qthgibanhid%_+q0cqluqyut_dt6ze(d!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+# TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -41,8 +64,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'quiz',
     # 'registration',
-    # 'social_auth',
-    
+    # 'social_auth',    
 )
 
 MIDDLEWARE_CLASSES = (
