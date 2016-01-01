@@ -13,14 +13,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates/')
-TEMPLATE_DIRS = (TEMPLATE_PATH,)
+# TEMPLATE_DIRS = (TEMPLATE_PATH,)
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             TEMPLATE_PATH
-            # (os.path.join(\'templates'),)
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -67,6 +66,8 @@ INSTALLED_APPS = (
     # 'social_auth',    
 )
 
+AUTH_PROFILE_MODULE = 'quiz.UserProfile'
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,20 +82,26 @@ ROOT_URLCONF = 'billuisin.urls'
 
 WSGI_APPLICATION = 'billuisin.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'billuisin',
-        'USER': 'postgres',
-        'PASSWORD': 'the great',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'billuisin.db',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'billuisin',
+#         'USER': 'postgres',
+#         'PASSWORD': 'the great',
+#         'HOST': '127.0.0.1',
+#         'PORT': '',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
