@@ -28,7 +28,7 @@ class UserProfile(models.Model):
 	address = models.CharField(max_length=150, null=True)
 	postal_code = models.PositiveIntegerField(null=True)
 	# Have to pull subjects from the subject class here, and more than one 
-	subject_name = models.CharField(choices=SUBJECTS, null=True, verbose_name='Name of subject(s)', max_length=17)
+	subject_name = models.CharField(choices=SUBJECTS, null=True, max_length=17)
 
 	def __unicode__(self):
 		return self.user
@@ -42,7 +42,15 @@ class UserProfile(models.Model):
 	# def user_subject_name(self):
 	# 	return self.user.subject_name
 
-class Subject(models.Model):
+# class Subject(models.Model):
+	
+
+# 	subject_name = models.CharField(choices=SUBJECTS, null=True, max_length=17)
+
+# 	def __unicode__(self):
+# 		return self.subject_name
+
+class Question(models.Model):
 	SUBJECTS = (
 		('java', 'Java'),
 		('dotnet','Asp.net'),
@@ -54,13 +62,7 @@ class Subject(models.Model):
 		('oops', 'Object Oriented Programming'),
 	)
 
-	subject_name = models.CharField(choices=SUBJECTS, null=True, verbose_name='Name of subject(s)', max_length=17)
-
-	def __unicode__(self):
-		return self.subject_name
-
-class Question(models.Model):
-	subject = models.ManyToManyField(Subject)
+	subject = models.CharField(choices=SUBJECTS, null=True, max_length=17)
 	question_text = models.TextField(max_length=150)
 	option_w = models.CharField(max_length=75, blank=True, null=True)
 	option_x = models.CharField(max_length=75, blank=True, null=True)
@@ -80,30 +82,42 @@ class Question(models.Model):
 class Answer(models.Model):
 	
 	id = models.OneToOneField(Question, primary_key=True)
+	# id = models.ForeignKey(Question, primary_key=True)
 
-	ANSWER_CHOICES = (
-		('get.option_w', 'get.option_w'),
-		('get.option_x', 'get.option_x'),
-		('get.option_y', 'get.option_y'),
-		('get.option_z', 'get.option_z'),
-	)
-	def get_option_w(self, obj):
-		return obj.id.option_w
-	def get_option_x(self, obj):
-		return obj.id.option_x
-	def get_option_y(self, obj):
-		return obj.id.option_y
-	def get_option_z(self, obj):
-		return obj.id.option_z
+	# def get_option_w(self, obj):
+	# 	return obj.id.option_w
+	# def get_option_x(self, obj):
+	# 	return obj.id.option_x
+	# def get_option_y(self, obj):
+	# 	return obj.id.option_y
+	# def get_option_z(self, obj):
+	# 	return obj.id.option_z
+	# ANSWER_CHOICES = (
+	# 	(get_option_w, get_option_w),
+	# 	(get_option_x, get_option_x),
+	# 	(get_option_y, get_option_y),
+	# 	(get_option_z, get_option_z),
+	# )
 
-	correct_answer = models.CharField(max_length=75, blank=False, default=None, choices=ANSWER_CHOICES)
+	correct_answer = models.CharField(max_length=75, blank=False, default=None)
 
 	def __unicode__(self):
 		return "The correct answer for question {} is {}".format( self.id, self.correct_answer)
 
 class QuizAttempt(models.Model):
+	SUBJECTS = (
+		('java', 'Java'),
+		('dotnet','Asp.net'),
+		('php','PHP'),
+		('testing','Software Testing'),
+		('python', 'Python'),
+		('ruby','Ruby on Rails'),
+		('cbasic', 'C Basic'),
+		('oops', 'Object Oriented Programming'),
+	)
+		
 	username = models.ManyToManyField(User)
-	subject = models.ManyToManyField(Subject)
+	subject = models.CharField(choices=SUBJECTS, null=True, max_length=17)
 	slug = models.SlugField(unique=False)
 	datetime = models.DateTimeField(auto_now_add=True)
 	questions_included = models.ForeignKey('quiz.Question', null=True)

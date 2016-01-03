@@ -4,24 +4,25 @@ from django.shortcuts import render
 from models import QuizAttempt, Question, Answer
 
 class AnswerForm(forms.ModelForm):
-	def get_option_w(self, obj):
-		return obj.id.option_w
-	def get_option_x(self, obj):
-		return obj.id.option_x
-	def get_option_y(self, obj):
-		return obj.id.option_y
-	def get_option_z(self, obj):
-		return obj.id.option_z
-	ANSWER_CHOICES = (
-		('get.option_w', 'get.option_w'),
-		('get.option_x', 'get.option_x'),
-		('get.option_y', 'get.option_y'),
-		('get.option_z', 'get.option_z'),
-	)
+	
+	# def get_option_w(self, obj):
+	# 	return obj.id.option_w
+	# def get_option_x(self, obj):
+	# 	return obj.id.option_x
+	# def get_option_y(self, obj):
+	# 	return obj.id.option_y
+	# def get_option_z(self, obj):
+	# 	return obj.id.option_z
+	# ANSWER_CHOICES = (
+	# 	(get_option_w, 'get_option_w'),
+	# 	(get_option_x, 'get_option_x'),
+	# 	(get_option_y, 'get_option_y'),
+	# 	(get_option_z, 'get_option_z'),
+	# )
 
 	class Meta:
 		model = Answer
-		correct_answer = forms.MultipleChoiceField(widget=forms.RadioSelect, choices='ANSWER_CHOICES')
+		# correct_answer = forms.MultipleChoiceField(widget=forms.RadioSelect, choices='ANSWER_CHOICES')
 		fields = ('id', 'correct_answer',)
 
 # class QuizAttempt(forms.Form):
