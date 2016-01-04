@@ -39,17 +39,6 @@ class UserProfile(models.Model):
 
 	post_save.connect(create_user_profile, sender=User)
 
-	# def user_subject_name(self):
-	# 	return self.user.subject_name
-
-# class Subject(models.Model):
-	
-
-# 	subject_name = models.CharField(choices=SUBJECTS, null=True, max_length=17)
-
-# 	def __unicode__(self):
-# 		return self.subject_name
-
 class Question(models.Model):
 	SUBJECTS = (
 		('java', 'Java'),
@@ -63,7 +52,7 @@ class Question(models.Model):
 	)
 
 	subject = models.CharField(choices=SUBJECTS, null=True, max_length=17)
-	question_text = models.TextField(max_length=150)
+	question_text = models.TextField(max_length=250)
 	option_w = models.CharField(max_length=75, blank=True, null=True)
 	option_x = models.CharField(max_length=75, blank=True, null=True)
 	option_y = models.CharField(max_length=75, blank=True)
@@ -81,9 +70,6 @@ class Question(models.Model):
 
 class Answer(models.Model):
 	
-	id = models.OneToOneField(Question, primary_key=True)
-	# id = models.ForeignKey(Question, primary_key=True)
-
 	# def get_option_w(self, obj):
 	# 	return obj.id.option_w
 	# def get_option_x(self, obj):
@@ -92,14 +78,16 @@ class Answer(models.Model):
 	# 	return obj.id.option_y
 	# def get_option_z(self, obj):
 	# 	return obj.id.option_z
-	# ANSWER_CHOICES = (
-	# 	(get_option_w, get_option_w),
-	# 	(get_option_x, get_option_x),
-	# 	(get_option_y, get_option_y),
-	# 	(get_option_z, get_option_z),
-	# )
+	ANSWER_CHOICES = (
+		('option_w', 'Option w'),
+		('option_x', 'Option x'),
+		('option_y', 'Option y'),
+		('option_z', 'Option z'),
+	)
 
-	correct_answer = models.CharField(max_length=75, blank=False, default=None)
+	id = models.OneToOneField(Question, primary_key=True)
+	# id = models.ForeignKey(Question, primary_key=True)
+	correct_answer = models.CharField(choices=ANSWER_CHOICES, max_length=75, blank=False, default=None)
 
 	def __unicode__(self):
 		return "The correct answer for question {} is {}".format( self.id, self.correct_answer)
@@ -117,11 +105,11 @@ class QuizAttempt(models.Model):
 	)
 		
 	username = models.ManyToManyField(User)
-	subject = models.CharField(choices=SUBJECTS, null=True, max_length=17)
+	subject = models.CharField(choices=SUBJECTS, null=False, max_length=17)
 	slug = models.SlugField(unique=False)
 	datetime = models.DateTimeField(auto_now_add=True)
 	questions_included = models.ForeignKey('quiz.Question', null=True)
-	correctly_answered_questions = models.IntegerField()
+	correctly_answered_questions = models.TextField()
 	total_marks = models.IntegerField()
 
 	class Meta:

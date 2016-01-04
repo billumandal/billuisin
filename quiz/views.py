@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import simplejson as json
 
 # Create your views here.
 def get_client_ip(request):

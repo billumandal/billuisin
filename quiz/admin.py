@@ -11,11 +11,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 	search_fields = ('user',)
 	list_filter = ('subject_name', )
 
-class AnswerAdmin(admin.ModelAdmin):
-	model = Answer
-	list_display = ('id', 'correct_answer')
-
-
+# class AnswerAdmin(admin.ModelAdmin):
 	# def get_option_w(self, obj):
 	# 	return obj.id.option_w
 	# def get_option_x(self, obj):
@@ -26,11 +22,14 @@ class AnswerAdmin(admin.ModelAdmin):
 	# 	return obj.id.option_z
 		
 	# ANSWER_CHOICES = (
-	# 	(get_option_w, get_option_w),
-	# 	(get_option_x, get_option_x),
-	# 	(get_option_y, get_option_y),
-	# 	(get_option_z, get_option_z),
+	# 	('option_w', 'Option w'),
+	# 	('option_x', 'Option x'),
+	# 	('option_y', 'Option y'),
+	# 	('option_z', 'Option z'),
 	# )
+
+# 	model = Answer
+# 	list_display = ('correct_answer')
 
 class AnswerInline(admin.TabularInline):
 	model = Answer
@@ -48,5 +47,4 @@ class QuizAttemptAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Answer, AnswerAdmin)
 admin.site.register(QuizAttempt)
