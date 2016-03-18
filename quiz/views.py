@@ -13,7 +13,7 @@ def get_client_ip(request):
 	if ip = '61.17.77.127':
 			# Let the user go on to do the quiz
 	else:
-			# Tell him to do this test inside Technnovation Labs
+			print "Kindly take the quiz by going to Technnovation Labs's premises."
 
 
 def QuizAttempt(request):
